@@ -39,7 +39,7 @@ class Indeterminate:
         """ Return a list of its info """
         return [self.unknown, self.subscript, self.degree]
 
-    def tostring(self):
+    def __str__(self):
         """ Return a string means the same """
         if not self.unknown:
             return '1'
@@ -142,7 +142,7 @@ class Term:
         """ Return a list of its info """
         return [[each.tolist() for each in self.indeterminates], self.coefficient, self.degree]
 
-    def tostring(self):
+    def __str__(self):
         """ Return a string means the same """
         pass  # TODO term.tostring
 
