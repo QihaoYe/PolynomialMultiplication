@@ -63,7 +63,7 @@ class Indeterminate:
         print(' '*spaces + 'subscript:\t    %s' % self.subscript)
         print(' '*spaces + 'degree   :\t    %s' % str(self.degree))
 
-    def isequal(self, other):
+    def __eq__(self, other):
         """ Judge if two indeterminates are equal """
         if not isinstance(other, Indeterminate):
             raise Exception('Must compare with an indeterminate!')
@@ -73,6 +73,10 @@ class Indeterminate:
                 if self.degree == other.degree:
                     return True
         return False
+
+    def __ne__(self, other):
+        """ Judge if two indeterminates are not equal """
+        return False if self == other else True
 
     def ismultiplicative(self, other):
         """ Judge if two indeterminates can multpily """
@@ -168,9 +172,17 @@ class Term:
         """ Add terms together """
         pass  # TODO add
 
+    def __sub__(self, other):
+        """ """
+        pass  # TODO sub
+
     def __mul__(self, other):
         """ Multiply two terms """
         pass  # TODO mul
+
+    def __truediv__(self, other):
+        """ """
+        pass  #TODO div
 
 
 class Polynomial:
