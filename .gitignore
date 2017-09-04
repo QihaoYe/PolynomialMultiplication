@@ -1,0 +1,9 @@
+
+*.pyc
+.idea/dictionaries/Ye172.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.DS_Store
+.idea/PolynomialMultiplication.iml
+.idea/workspace.xml
