@@ -183,10 +183,14 @@ class Term:
         """ Add two Terms """
         if not isinstance(other, Term):
             raise Exception('Must add with a Term!')
+        if not self.isincreasable(other):
+            raise Exception('Increasable Term acquired!')
+
+        return Term(*self.indeterminates, coefficient=self.coefficient + other.coefficient)
 
     def __sub__(self, other):
         """ Subtract two Terms """
-        pass  # TODO sub
+        return self + Term(*other.indeterminates, coefficient=-other.coefficient)
 
     def __mul__(self, other):
         """ Multiply two Terms """
@@ -245,7 +249,8 @@ T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P = Polynomial(T2, T1, T3, T4)
 # c.multiply(c).showdetail()
-T1.showdetail()
+(T2-T5).showdetail()
+# T1.showdetail()
 # P.add(5).tostring())
 # print([i.tolist() for i in T1.indeterminates])
 # print(T1.tolist())
