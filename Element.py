@@ -31,9 +31,14 @@ class Indeterminate:
         if isinstance(degree, bool) or isinstance(degree, str):
             raise Exception('Degree must be int or float!')
 
-        self.unknown = unknown
-        self.subscript = subscript
-        self.degree = dtos(degree)
+        if degree:
+            self.unknown = unknown
+            self.subscript = subscript
+            self.degree = dtos(degree)
+        else:
+            self.unknown = ''
+            self.subscript = None
+            self.degree = 0
 
     def tolist(self):
         """ Return a list of its info """
@@ -129,15 +134,20 @@ class Term:
             if index >= len(indeterminates)-1:
                 break
             try:
-                indeterminates = indeterminates[:index] \
+                indeterminates = indeterminates[:index]\
                                  + [indeterminates[index] * indeterminates[index+1]]\
                                  + indeterminates[index+2:]
             except:
                 index += 1
 
-        self.indeterminates = indeterminates or [CONSTANT]
-        self.coefficient = dtos(coefficient)
-        self.degree = dtos(sum(each.degree for each in indeterminates))
+        if coefficient:
+            self.indeterminates = indeterminates or [CONSTANT]
+            self.coefficient = dtos(coefficient)
+            self.degree = dtos(sum(each.degree for each in indeterminates))
+        else:
+            self.indeterminates = [CONSTANT]
+            self.coefficient = 0
+            self.degree = 0
 
     def tolist(self):
         """ Return a list of its info """
@@ -184,6 +194,9 @@ class Term:
     def __truediv__(self, other):
         """ Divide two terms """
         pass  # TODO div
+
+
+ZERO_TERM = Term(coefficient=0)
 
 
 class Polynomial:
