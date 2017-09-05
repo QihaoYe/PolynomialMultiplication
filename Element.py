@@ -166,6 +166,14 @@ class Term:
             print(' '*spaces + 'Indeterminate#%02d:' % (n+1))
             each.showdetail(5+spaces)
 
+    def __eq__(self, other):
+        """ Judge if two Terms are equal """
+        pass  # TODO __eq__
+
+    def __ne__(self, other):
+        """ Judge if two Terms are not equal """
+        return False if self == other else True
+
     def isincreasable(self, other):
         """ Judge if two Terms is increasable """
         if not isinstance(other, Term):
@@ -249,8 +257,7 @@ T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P = Polynomial(T2, T1, T3, T4)
 # c.multiply(c).showdetail()
-(T2-T5).showdetail()
-# T1.showdetail()
+T1.showdetail()
 # P.add(5).tostring())
 # print([i.tolist() for i in T1.indeterminates])
 # print(T1.tolist())
