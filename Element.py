@@ -101,7 +101,8 @@ class Indeterminate:
 
         if not self.unknown and not self.subscript:
             return other
-        return Indeterminate(self.unknown, self.subscript, self.degree + other.degree)
+        degree = self.degree + other.degree
+        return Indeterminate(self.unknown, self.subscript, degree) if degree else CONSTANT
 
     def __truediv__(self, other):
         """ Divide a indeterminate by another """
@@ -182,7 +183,7 @@ class Term:
 
     def __truediv__(self, other):
         """ Divide two terms """
-        pass  #TODO div
+        pass  # TODO div
 
 
 class Polynomial:
