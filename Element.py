@@ -22,10 +22,10 @@ def stos(string):
 
 
 class Indeterminate:
-    """ A member of the term """
+    """ A member of the Term """
     def __init__(self, unknown, subscript=None, degree=1):
         if not isinstance(unknown, str):
-            raise Exception('Name of indeterminate must be string!')
+            raise Exception('Name of Indeterminate must be string!')
         if not isinstance(subscript, str) and subscript is not None:
             raise Exception('Subscript must be string!')
         if isinstance(degree, bool) or isinstance(degree, str):
@@ -69,9 +69,9 @@ class Indeterminate:
         print(' '*spaces + 'degree   :\t    %s' % str(self.degree))
 
     def __eq__(self, other):
-        """ Judge if two indeterminates are equal """
+        """ Judge if two Indeterminates are equal """
         if not isinstance(other, Indeterminate):
-            raise Exception('Must compare with an indeterminate!')
+            raise Exception('Must compare with an Indeterminate!')
 
         if self.unknown == other.unknown:
             if self.subscript == other.subscript:
@@ -80,13 +80,13 @@ class Indeterminate:
         return False
 
     def __ne__(self, other):
-        """ Judge if two indeterminates are not equal """
+        """ Judge if two Indeterminates are not equal """
         return False if self == other else True
 
     def ismultiplicative(self, other):
-        """ Judge if two indeterminates can multpily """
+        """ Judge if two Indeterminates can multiply """
         if not isinstance(other, Indeterminate):
-            raise Exception('Must compare with an indeterminate!')
+            raise Exception('Must compare with an Indeterminate!')
 
         if not self.unknown and not self.subscript:
             return True
@@ -98,11 +98,11 @@ class Indeterminate:
         return False
 
     def __mul__(self, other):
-        """ Multiply two multiplicative indeterminates """
+        """ Multiply two multiplicative Indeterminates """
         if not isinstance(other, Indeterminate):
             raise Exception('Indeterminate must be valid!')
         if not self.ismultiplicative(other):
-            raise Exception('Multiplicative indeterminate acquired!')
+            raise Exception('Multiplicative Indeterminate acquired!')
 
         if not self.unknown and not self.subscript:
             return other
@@ -110,7 +110,7 @@ class Indeterminate:
         return Indeterminate(self.unknown, self.subscript, degree) if degree else CONSTANT
 
     def __truediv__(self, other):
-        """ Divide a indeterminate by another """
+        """ Divide an Indeterminate by another """
         return self * Indeterminate(other.unknown, other.subscript, -other.degree)
 
 
@@ -118,13 +118,13 @@ CONSTANT = Indeterminate('', degree=0)
 
 
 class Term:
-    """ A member of the polynomial """
+    """ A member of the Polynomial """
     def __init__(self, *indeterminates, coefficient=1):
         if isinstance(coefficient, bool) or isinstance(coefficient, str):
             raise Exception('Coefficient must be valid!')
         for each in indeterminates:
             if not isinstance(each, Indeterminate):
-                raise Exception('Each indeterminate must be valid!')
+                raise Exception('Each Indeterminate must be valid!')
 
         # Sort the indeterminates by indeterminate and subscript
         indeterminates = sorted(indeterminates, key=lambda x: x.subscript or '', reverse=True)
@@ -159,17 +159,17 @@ class Term:
 
     def showdetail(self, spaces=0):
         """ Print detailed info """
-        print(' '*spaces + 'number of indeterminates:\t    %d' % len(self.indeterminates))
+        print(' '*spaces + 'number of Indeterminates:\t    %d' % len(self.indeterminates))
         print(' '*spaces + 'coefficient             :\t    %s' % str(self.coefficient))
         print(' '*spaces + 'degree                  :\t    %s' % str(self.degree))
         for n, each in enumerate(self.indeterminates):
-            print(' '*spaces + 'indeterminate#%02d:' % (n+1))
+            print(' '*spaces + 'Indeterminate#%02d:' % (n+1))
             each.showdetail(5+spaces)
 
     def isincreasable(self, other):
-        """ Judge if two terms is increasable """
+        """ Judge if two Terms is increasable """
         if not isinstance(other, Term):
-            raise Exception('Must compare with a term!')
+            raise Exception('Must compare with a Term!')
 
         if self.degree == other.degree:
             if len(self.indeterminates) == len(other.indeterminates):
@@ -180,19 +180,20 @@ class Term:
         return False
 
     def __add__(self, other):
-        """ Add two terms """
-        pass  # TODO add
+        """ Add two Terms """
+        if not isinstance(other, Term):
+            raise Exception('Must add with a Term!')
 
     def __sub__(self, other):
-        """ Subtract two terms """
+        """ Subtract two Terms """
         pass  # TODO sub
 
     def __mul__(self, other):
-        """ Multiply two terms """
+        """ Multiply two Terms """
         pass  # TODO mul
 
     def __truediv__(self, other):
-        """ Divide two terms """
+        """ Divide two Terms """
         pass  # TODO div
 
 
@@ -204,9 +205,9 @@ class Polynomial:
     def __init__(self, *terms):
         for each in terms:
             if not isinstance(each, Term):
-                raise Exception('Each term must be valid!')
+                raise Exception('Each Term must be valid!')
 
-        # Sort the terms by degree and number of indeterminates
+        # Sort the terms by degree and number of Indeterminates
         terms = sorted(terms, key=lambda x: len(x.indeterminates))
         terms = sorted(terms, key=lambda x: x.degree, reverse=True)
 
@@ -222,7 +223,7 @@ class Polynomial:
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
-                    raise Exception('Each polynomial must be valid!')
+                    raise Exception('Each Polynomial must be valid!')
 
         try:
             other = Polynomial(Term(CONSTANT, coefficient=other))
