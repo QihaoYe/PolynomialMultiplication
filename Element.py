@@ -163,7 +163,7 @@ class Term:
         if self.degree == other.degree:
             if len(self.indeterminates) == len(other.indeterminates):
                 for n, each in enumerate(other.indeterminates):
-                    if not self.indeterminates[n].isequal(each):
+                    if self.indeterminates[n] != each:
                         return False
                 return True
         return False
