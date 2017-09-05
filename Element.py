@@ -169,11 +169,11 @@ class Term:
         return False
 
     def __add__(self, other):
-        """ Add terms together """
+        """ Add two terms """
         pass  # TODO add
 
     def __sub__(self, other):
-        """ """
+        """ Subtract two terms """
         pass  # TODO sub
 
     def __mul__(self, other):
@@ -181,7 +181,7 @@ class Term:
         pass  # TODO mul
 
     def __truediv__(self, other):
-        """ """
+        """ Divide two terms """
         pass  #TODO div
 
 
