@@ -79,10 +79,6 @@ class Indeterminate:
                     return True
         return False
 
-    def __ne__(self, other):
-        """ Judge if two Indeterminates are not equal """
-        return False if self == other else True
-
     def ismultiplicative(self, other):
         """ Judge if two Indeterminates can multiply """
         if not isinstance(other, Indeterminate):
@@ -177,10 +173,6 @@ class Term:
                     return True
         return False
 
-    def __ne__(self, other):
-        """ Judge if two Terms are not equal """
-        return False if self == other else True
-
     def isincreasable(self, other):
         """ Judge if two Terms is increasable """
         if not isinstance(other, Term):
@@ -248,6 +240,15 @@ class Polynomial:
         for n, each in enumerate(self.terms):
             print(' ' * spaces + 'Term #%02d:' % (n + 1))
             each.showdetail(5 + spaces)
+
+    def __eq__(self, other):
+        """ Judge if two Polynomials are equal """
+        if not isinstance(other, Polynomial):
+            raise Exception('Must compare with a Polynomial!')
+
+        if self.terms == other.terms:
+            return True
+        return False
 
     def __add__(self, other):
         """ Add polynomials together """
