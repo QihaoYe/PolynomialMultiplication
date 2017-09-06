@@ -163,7 +163,7 @@ class Term:
         print(' '*spaces + 'coefficient             :\t    %s' % str(self.coefficient))
         print(' '*spaces + 'degree                  :\t    %s' % str(self.degree))
         for n, each in enumerate(self.indeterminates):
-            print(' '*spaces + 'Indeterminate#%02d:' % (n+1))
+            print(' '*spaces + 'Indeterminate #%02d:' % (n+1))
             each.showdetail(5+spaces)
 
     def __eq__(self, other):
@@ -236,7 +236,11 @@ class Polynomial:
 
     def showdetail(self, spaces=0):
         """ Print detailed info """
-        pass  # TODO showdetail
+        print(' ' * spaces + 'number of Terms:\t    %d' % len(self.terms))
+        print(' ' * spaces + 'degree         :\t    %s' % str(self.degree))
+        for n, each in enumerate(self.terms):
+            print(' ' * spaces + 'Term #%02d:' % (n + 1))
+            each.showdetail(5 + spaces)
 
     def __add__(self, other):
         """ Add polynomials together """
@@ -265,11 +269,10 @@ T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P = Polynomial(T2, T1, T3, T4)
 # c.multiply(c).showdetail()
-T1.showdetail()
-# P.add(5).tostring())
+# T1.showdetail()
 # print([i.tolist() for i in T1.indeterminates])
 # print(T1.tolist())
 # print([i.tolist() for i in P.terms])
 # print(P.tolist())
 # print(T2.isincreasable(T5))
-# P+1
+# P.showdetail()
