@@ -13,7 +13,7 @@ def ftoi(num):
 
 def dtos(num):
     """ Digit to Simply digit """
-    return ftoi(round(num, 16))
+    return ftoi(round(num, 10))
 
 
 def stos(string):
@@ -23,7 +23,7 @@ def stos(string):
 
 class Indeterminate:
     """ A member of the Term """
-    def __init__(self, unknown, subscript=None, degree=1):
+    def __init__(self, unknown, subscript=None, degree=1.0):
         if not isinstance(unknown, str):
             raise Exception('Name of Indeterminate must be string!')
         if not isinstance(subscript, str) and subscript is not None:
@@ -115,7 +115,7 @@ CONSTANT = Indeterminate('', degree=0)
 
 class Term:
     """ A member of the Polynomial """
-    def __init__(self, *indeterminates, coefficient=1):
+    def __init__(self, *indeterminates, coefficient=1.0):
         if isinstance(coefficient, bool) or isinstance(coefficient, str):
             raise Exception('Coefficient must be valid!')
         for each in indeterminates:
@@ -208,11 +208,15 @@ class Term:
 
     def __mul__(self, other):
         """ Multiply two Terms """
-        pass  # TODO mul
+        if not isinstance(other, Term):
+            raise Exception('Term acquired')
+
+        indeterminates = self.indeterminates + other.indeterminates
+        return Term(*indeterminates, coefficient=self.coefficient * other.coefficient)
 
     def __truediv__(self, other):
         """ Divide two Terms """
-        pass  # TODO div
+        return self * Term(*[CONSTANT / each for each in other.indeterminates], coefficient=1 / other.coefficient)
 
 
 ZERO_TERM = Term(coefficient=0)
@@ -283,6 +287,7 @@ T3 = Term(c, c, coefficient=4)
 T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P = Polynomial(T2, T1, T3, T4)
+(T2 / T3).showdetail()
 # c.multiply(c).showdetail()
 # T1.showdetail()
 # print([i.tolist() for i in T1.indeterminates])
