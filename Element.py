@@ -130,9 +130,11 @@ class Term:
             if index >= len(indeterminates)-1:
                 break
             try:
-                indeterminates = indeterminates[:index]\
-                                 + [indeterminates[index] * indeterminates[index+1]]\
-                                 + indeterminates[index+2:]
+                middle = indeterminates[index] * indeterminates[index+1]
+                if middle == CONSTANT:
+                    indeterminates = indeterminates[:index] + indeterminates[index+2:]
+                else:
+                    indeterminates = indeterminates[:index] + [middle] + indeterminates[index+2:]
             except:
                 index += 1
 
@@ -151,7 +153,9 @@ class Term:
 
     def __str__(self):
         """ Return a string means the same """
-        pass  # TODO term.tostring
+        if not self.degree:
+            return '%s' % str(self.coefficient)
+
 
     def showdetail(self, spaces=0):
         """ Print detailed info """
