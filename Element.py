@@ -155,8 +155,11 @@ class Term:
         """ Return a string means the same """
         if not self.degree:
             return '%s' % str(self.coefficient)
-
-
+        else:
+            string = '' if self.coefficient == 1 else '-' if self.coefficient == -1 else str(self.coefficient)
+            string += '*'.join(str(each) for each in self.indeterminates)
+            return string
+            
     def showdetail(self, spaces=0):
         """ Print detailed info """
         print(' '*spaces + 'number of Indeterminates:\t    %d' % len(self.indeterminates))
