@@ -168,7 +168,14 @@ class Term:
 
     def __eq__(self, other):
         """ Judge if two Terms are equal """
-        pass  # TODO __eq__
+        if not isinstance(other, Term):
+            raise Exception('Must compare with a Term!')
+
+        if self.coefficient == other.coefficient:
+            if self.degree == other.degree:
+                if self.indeterminates == other.indeterminates:
+                    return True
+        return False
 
     def __ne__(self, other):
         """ Judge if two Terms are not equal """
