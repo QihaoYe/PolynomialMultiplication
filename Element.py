@@ -184,7 +184,7 @@ class Term:
         """ Judge if two Terms is increasable """
         if not isinstance(other, Term):
             raise Exception('Must compare with a Term!')
-
+        # FIXME ZERO_TERM error
         if self.degree == other.degree:
             if len(self.indeterminates) == len(other.indeterminates):
                 for n, each in enumerate(other.indeterminates):
@@ -232,6 +232,18 @@ class Polynomial:
         # Sort the terms by degree and number of Indeterminates
         terms = sorted(terms, key=lambda x: len(x.indeterminates))
         terms = sorted(terms, key=lambda x: x.degree, reverse=True)
+        index = 0
+        while 1:
+            if index >= len(terms) - 1:
+                break
+            try:
+                middle = terms[index] + terms[index + 1]
+                if middle == ZERO_TERM:
+                    terms = terms[:index] + terms[index + 2:]
+                else:
+                    terms = terms[:index] + [middle] + terms[index + 2:]
+            except:
+                index += 1
 
         self.terms = terms
         self.degree = terms[0].degree
@@ -242,7 +254,8 @@ class Polynomial:
 
     def __str__(self):
         """ Return a string means the same """
-        pass  # TODO __str__
+        return '+'.join(str(each) for each in self.terms)
+        # FIXME '+' & '-' collision
 
     def showdetail(self, spaces=0):
         """ Print detailed info """
@@ -270,10 +283,9 @@ class Polynomial:
 
         try:
             other = Polynomial(Term(CONSTANT, coefficient=other))
-        except:
-            pass
         finally:
-            print(other.tolist())
+            terms = self.terms + other.terms
+            return Polynomial(*terms)
 
 
 # ---[test zone]---
@@ -287,7 +299,6 @@ T3 = Term(c, c, coefficient=4)
 T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P = Polynomial(T2, T1, T3, T4)
-(T2 / T3).showdetail()
 # c.multiply(c).showdetail()
 # T1.showdetail()
 # print([i.tolist() for i in T1.indeterminates])
