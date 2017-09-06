@@ -4,7 +4,7 @@ __author__ = 'Yee_172'
 __data__ = '2017/8/29'
 
 from Element import *
-# indeterminate, term, polynomial, ftoi, dtos, stos
+# Indeterminate, Term, Polynomial, ftoi, dtos, stos
 
 
 def advanced_split(string, *symbols, contain=False, linked='right'):
@@ -60,7 +60,7 @@ def advanced_split(string, *symbols, contain=False, linked='right'):
 
 
 def str2term(string):
-    """ Get a string, return a term """
+    """ Get a string, return a Term """
     # Ignore the spaces
     string = string.replace(' ', '')
 
@@ -86,26 +86,26 @@ def str2term(string):
             underline = each.find('_')
             caret = each.find('^')
             if underline + 1 and caret + 1:
-                _indeterminate = each[:underline]
+                _unknown = each[:underline]
                 _subscript = each[underline+1:caret]
                 _degree = each[caret+1:]
                 if '_' in _subscript or '_' in _degree:
                     raise Exception
                 if '^' in _degree:
                     raise Exception
-                indeterminates.append(Indeterminate(_indeterminate, subscript=_subscript, degree=stos(_degree)))
+                indeterminates.append(Indeterminate(_unknown, subscript=_subscript, degree=stos(_degree)))
             elif underline + 1:
-                _indeterminate = each[:underline]
+                _unknown = each[:underline]
                 _subscript = each[underline+1:]
                 if '_' in _subscript:
                     raise Exception
-                indeterminates.append(Indeterminate(_indeterminate, subscript=_subscript))
+                indeterminates.append(Indeterminate(_unknown, subscript=_subscript))
             elif caret + 1:
-                _indeterminate = each[:caret]
+                _unknown = each[:caret]
                 _degree = each[caret+1:]
                 if '^' in _degree:
                     raise Exception
-                indeterminates.append(Indeterminate(_indeterminate, degree=stos(_degree)))
+                indeterminates.append(Indeterminate(_unknown, degree=stos(_degree)))
             else:
                 indeterminates.append(Indeterminate(each, degree=int(bool(each))))
     except:

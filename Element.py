@@ -230,6 +230,14 @@ class Polynomial:
         """ Return a list of its info """
         return [[each.tolist() for each in self.terms], self.degree]
 
+    def __str__(self):
+        """ Return a string means the same """
+        pass  # TODO __str__
+
+    def showdetail(self, spaces=0):
+        """ Print detailed info """
+        pass  # TODO showdetail
+
     def __add__(self, other):
         """ Add polynomials together """
         if not isinstance(other, Polynomial):
