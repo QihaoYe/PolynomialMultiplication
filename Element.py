@@ -84,9 +84,7 @@ class Indeterminate:
         if not isinstance(other, Indeterminate):
             raise Exception('Must compare with an Indeterminate!')
 
-        if not self.unknown and not self.subscript:
-            return True
-        if not other.unknown and not other.subscript:
+        if self == CONSTANT or other == CONSTANT:
             return True
         if self.unknown == other.unknown:
             if self.subscript == other.subscript:
@@ -100,8 +98,8 @@ class Indeterminate:
         if not self.ismultiplicative(other):
             raise Exception('Multiplicative Indeterminate acquired!')
 
-        if not self.unknown and not self.subscript:
-            return other
+        if self == CONSTANT:
+            return Indeterminate(other.unknown, other.subscript, other.degree)
         degree = self.degree + other.degree
         return Indeterminate(self.unknown, self.subscript, degree) if degree else CONSTANT
 
@@ -184,7 +182,9 @@ class Term:
         """ Judge if two Terms is increasable """
         if not isinstance(other, Term):
             raise Exception('Must compare with a Term!')
-        # FIXME ZERO_TERM error
+
+        if self == ZERO_TERM or other == ZERO_TERM:
+            return True
         if self.degree == other.degree:
             if len(self.indeterminates) == len(other.indeterminates):
                 for n, each in enumerate(other.indeterminates):
@@ -200,6 +200,8 @@ class Term:
         if not self.isincreasable(other):
             raise Exception('Increasable Term acquired!')
 
+        if self == ZERO_TERM:
+            return Term(*other.indeterminates, coefficient=other.coefficient)
         return Term(*self.indeterminates, coefficient=self.coefficient + other.coefficient)
 
     def __sub__(self, other):
