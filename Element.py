@@ -299,18 +299,27 @@ class Polynomial:
         if not isinstance(other, int) and not isinstance(other, float):
             raise Exception('Valid constant required!')
 
-        other = Polynomial(Term(CONSTANT, coefficient=other))
-        terms = self.terms + other.terms
-        return Polynomial(*terms)
+        return self + other
 
     def __sub__(self, other):
         """ Subtract two Polynomials """
-        terms = self.terms + [ZERO_TERM - each for each in other.terms]
-        return Polynomial(*terms)
+        if not isinstance(other, Polynomial):
+            if not isinstance(other, int):
+                if not isinstance(other, float):
+                    raise Exception('Each Polynomial must be valid!')
+
+        try:
+            other = Polynomial(Term(CONSTANT, coefficient=-other))
+        finally:
+            terms = self.terms + [ZERO_TERM - each for each in other.terms]
+            return Polynomial(*terms)
 
     def __rsub__(self, other):
         """ Constant minus Polynomial """
-        pass
+        if not isinstance(other, int) and not isinstance(other, float):
+            raise Exception('Valid constant required!')
+
+        return Polynomial() - self + other
 
     def __mul__(self, other):
         """ Multiply two Polynomials """
@@ -344,4 +353,3 @@ T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P1 = Polynomial(T2, T1, T3, T4)
 P2 = Polynomial(T2)
-print(1.1 + P1)
