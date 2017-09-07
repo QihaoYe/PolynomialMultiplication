@@ -79,6 +79,10 @@ class Indeterminate:
                     return True
         return False
 
+    # def __copy__(self):
+    #     """ Return a copy of itself """
+    #     return Indeterminate(self.unknown, self.subscript, self.degree)
+
     def ismultiplicative(self, other):
         """ Judge if two Indeterminates can multiply """
         if not isinstance(other, Indeterminate):
@@ -289,6 +293,9 @@ class Polynomial:
             terms = self.terms + other.terms
             return Polynomial(*terms)
 
+    def __sub__(self, other):
+        """ Subtract two Polynomials """
+        pass
 
 # ---[test zone]---
 a = Indeterminate('x', subscript='1', degree=1)
