@@ -251,6 +251,7 @@ class Polynomial:
             except:
                 index += 1
 
+        terms = terms or [ZERO_TERM]
         self.terms = terms
         self.degree = terms[0].degree
 
@@ -295,7 +296,9 @@ class Polynomial:
 
     def __sub__(self, other):
         """ Subtract two Polynomials """
-        pass
+        terms = self.terms + [ZERO_TERM - each for each in other.terms]
+        return Polynomial(*terms)
+
 
 # ---[test zone]---
 a = Indeterminate('x', subscript='1', degree=1)
