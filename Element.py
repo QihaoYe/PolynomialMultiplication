@@ -254,8 +254,8 @@ class Polynomial:
 
     def __str__(self):
         """ Return a string means the same """
-        return '+'.join(str(each) for each in self.terms)
-        # FIXME '+' & '-' collision
+        string = '+'.join(str(each) for each in self.terms).replace('+-', '-')
+        return string[1:] if string[0] == '+' else string
 
     def showdetail(self, spaces=0):
         """ Print detailed info """
