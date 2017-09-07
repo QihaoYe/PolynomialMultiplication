@@ -294,14 +294,38 @@ class Polynomial:
             terms = self.terms + other.terms
             return Polynomial(*terms)
 
+    def __radd__(self, other):
+        """ Constant plus Polynomial """
+        if not isinstance(other, int) and not isinstance(other, float):
+            raise Exception('Valid constant required!')
+
+        other = Polynomial(Term(CONSTANT, coefficient=other))
+        terms = self.terms + other.terms
+        return Polynomial(*terms)
+
     def __sub__(self, other):
         """ Subtract two Polynomials """
         terms = self.terms + [ZERO_TERM - each for each in other.terms]
         return Polynomial(*terms)
 
+    def __rsub__(self, other):
+        """ Constant minus Polynomial """
+        pass
+
     def __mul__(self, other):
         """ Multiply two Polynomials """
-        pass  # TODO __mul__
+        if not isinstance(other, Polynomial):
+            if not isinstance(other, int):
+                if not isinstance(other, float):
+                    raise Exception('Each Polynomial must be valid!')
+
+        try:
+            other = Polynomial(Term(CONSTANT, coefficient=other))
+        finally:
+            terms = []
+            for each in other.terms:
+                terms += [_each * each for _each in self.terms]
+            return Polynomial(*terms)
 
     def __truediv__(self, other):
         """ Divide two Polynomials """
@@ -318,12 +342,6 @@ T2 = Term(a, a, b, coefficient=3)
 T3 = Term(c, c, coefficient=4)
 T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
-P = Polynomial(T2, T1, T3, T4)
-# c.multiply(c).showdetail()
-# T1.showdetail()
-# print([i.tolist() for i in T1.indeterminates])
-# print(T1.tolist())
-# print([i.tolist() for i in P.terms])
-# print(P.tolist())
-# print(T2.isincreasable(T5))
-# P.showdetail()
+P1 = Polynomial(T2, T1, T3, T4)
+P2 = Polynomial(T2)
+print(1.1 + P1)
