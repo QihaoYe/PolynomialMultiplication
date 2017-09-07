@@ -299,6 +299,14 @@ class Polynomial:
         terms = self.terms + [ZERO_TERM - each for each in other.terms]
         return Polynomial(*terms)
 
+    def __mul__(self, other):
+        """ Multiply two Polynomials """
+        pass  # TODO __mul__
+
+    def __truediv__(self, other):
+        """ Divide two Polynomials """
+        pass  # TODO __truediv__
+
 
 # ---[test zone]---
 a = Indeterminate('x', subscript='1', degree=1)
