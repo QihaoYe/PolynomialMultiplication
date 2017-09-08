@@ -127,4 +127,4 @@ def str2polynomial(string):
 # ---[test zone]---
 # print(advanced_split('-4x_1^2*y_2^3','^',contain=True,linked='left'))
 # print(str2term('-4x_1^2*y_2^3').tolist())
-print(str2polynomial('-5x_1^2 * y_3 + 6x_2^2 * y^ 4 - x*y +7').tolist())
+# print(str2polynomial('-5x_1^2 * y_3 + 6x_2^2 * y^ 4 - x*y +7').tolist())

@@ -159,7 +159,7 @@ class Term:
                 raise Exception('Each Indeterminate must be valid!')
 
         # Sort the indeterminates by indeterminate and subscript
-        indeterminates = sorted(indeterminates, key=lambda x: x.subscript or '', reverse=True)
+        indeterminates = sorted(indeterminates, key=lambda x: x.subscript or '')
         indeterminates = sorted(indeterminates, key=lambda x: x.unknown)
         index = 0
         while 1:
@@ -445,14 +445,14 @@ class Polynomial:
 
 
 # ---[test zone]---
-a = Indeterminate('x', subscript='1', degree=1)
-b = Indeterminate('y', subscript='3', degree=2)
-c = Indeterminate('x', subscript='2', degree=4)
-d = Indeterminate('x', subscript='1', degree=1)
-T1 = Term(a, b, c, a, coefficient=5)
-T2 = Term(a, a, b, coefficient=3)
-T3 = Term(c, c, coefficient=4)
-T4 = Term(coefficient=-1)
-T5 = Term(a, b, d)
-P1 = Polynomial(T2, T1, T3, T4)
-P2 = Polynomial(T2, T3)
+# a = Indeterminate('x', subscript='1', degree=1)
+# b = Indeterminate('y', subscript='3', degree=2)
+# c = Indeterminate('x', subscript='2', degree=4)
+# d = Indeterminate('x', subscript='1', degree=1)
+# T1 = Term(a, b, c, a, coefficient=5)
+# T2 = Term(a, a, b, coefficient=3)
+# T3 = Term(c, c, coefficient=4)
+# T4 = Term(coefficient=-1)
+# T5 = Term(a, b, d)
+# P1 = Polynomial(T2, T1, T3, T4)
+# P2 = Polynomial(T2, T3)
