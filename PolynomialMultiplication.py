@@ -26,5 +26,5 @@ gamma3 = Indeterminate('γ', subscript='3')
 cosαβ = str2polynomial('α_1*β_1+α_2*β_2+α_3*β_3')
 cosαγ = str2polynomial('α_1*γ_1+α_2*γ_2+α_3*γ_3')
 cosβγ = str2polynomial('β_1*γ_1+β_2*γ_2+β_3*γ_3')
-a = Δcosα ** 2
+a = Δcosα ** 3
 print(a)

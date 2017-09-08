@@ -302,7 +302,7 @@ class Polynomial:
                 raise Exception('Each Term must be valid!')
 
         # Sort the terms by degree and number of Indeterminates
-        terms = sorted(terms, key=str)
+        terms = sorted(terms, key=lambda x: str(Term(*x.indeterminates)))
         terms = sorted(terms, key=lambda x: len(x.indeterminates))
         terms = sorted(terms, key=lambda x: x.degree, reverse=True)
         index = 0
