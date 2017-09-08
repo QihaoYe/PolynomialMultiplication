@@ -264,7 +264,7 @@ class Term:
         Subtract two Terms
         T1 - T2
         """
-        return self + (-other)
+        return -other + self
 
     def __mul__(self, other):
         """
@@ -390,7 +390,7 @@ class Polynomial:
         try:
             other = Polynomial(Term(CONSTANT, coefficient=-other))
         finally:
-            return self + (-other)
+            return -other + self
 
     def __rsub__(self, other):
         """
@@ -400,7 +400,7 @@ class Polynomial:
         if not isinstance(other, int) and not isinstance(other, float):
             raise Exception('Valid constant required!')
 
-        return Polynomial() - self + other
+        return -self + other
 
     def __mul__(self, other):
         """
@@ -429,6 +429,13 @@ class Polynomial:
         """
         pass  # TODO __truediv__
 
+    def __pow__(self, power, modulo=None):
+        """
+        Power a Polynomial
+        P1 ** power
+        """
+        pass  # TODO __pow__
+
 
 # ---[test zone]---
 a = Indeterminate('x', subscript='1', degree=1)
@@ -443,4 +450,4 @@ T5 = Term(a, b, d)
 P1 = Polynomial(T2, T1, T3, T4)
 P2 = Polynomial(T2)
 print(P1)
-print(5 * P1)
+print(3 - P1)
