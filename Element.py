@@ -9,6 +9,7 @@ __data__ = '2017/8/28'
 def ftoi(num):
     """
     Float to int if it has no decimal
+    1.0 -> 1
     """
     return int(num) if int(num) == num else num
 
@@ -16,6 +17,7 @@ def ftoi(num):
 def dtos(num):
     """
     Digit to Simply digit
+    1.0000000000001 -> 1
     """
     return ftoi(round(num, 10))
 
@@ -23,6 +25,7 @@ def dtos(num):
 def stos(string):
     """
     String to Simply digit
+    '1.0000000000001' -> 1
     """
     return dtos(float(string))
 
@@ -118,6 +121,7 @@ class Indeterminate:
     def __mul__(self, other):
         """
         Multiply two multiplicative Indeterminates
+        I1 * I2
         """
         if not isinstance(other, Indeterminate):
             raise Exception('Indeterminate must be valid!')
@@ -132,6 +136,7 @@ class Indeterminate:
     def __truediv__(self, other):
         """
         Divide an Indeterminate by another
+        I1 / I2
         """
         return self * Indeterminate(other.unknown, other.subscript, -other.degree)
 
@@ -233,9 +238,17 @@ class Term:
                 return True
         return False
 
+    def __neg__(self):
+        """
+        Return negative Term
+        - T1
+        """
+        return Term(*self.indeterminates, coefficient=-self.coefficient)
+
     def __add__(self, other):
         """
         Add two Terms
+        T1 + T2
         """
         if not isinstance(other, Term):
             raise Exception('Must add with a Term!')
@@ -249,12 +262,14 @@ class Term:
     def __sub__(self, other):
         """
         Subtract two Terms
+        T1 - T2
         """
-        return self + Term(*other.indeterminates, coefficient=-other.coefficient)
+        return self + (-other)
 
     def __mul__(self, other):
         """
         Multiply two Terms
+        T1 * T2
         """
         if not isinstance(other, Term):
             raise Exception('Term acquired')
@@ -265,6 +280,7 @@ class Term:
     def __truediv__(self, other):
         """
         Divide two Terms
+        T1 / T2
         """
         return self * Term(*[CONSTANT / each for each in other.indeterminates], coefficient=1 / other.coefficient)
 
@@ -327,6 +343,7 @@ class Polynomial:
     def __eq__(self, other):
         """
         Judge if two Polynomials are equal
+        P1 == P2
         """
         if not isinstance(other, Polynomial):
             raise Exception('Must compare with a Polynomial!')
@@ -335,9 +352,17 @@ class Polynomial:
             return True
         return False
 
+    def __neg__(self):
+        """
+        Return negative Polynomial
+        - P1
+        """
+        return Polynomial(*[-each for each in self.terms])
+
     def __add__(self, other):
         """
         Add polynomials together
+        P1 + P2
         """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
@@ -355,6 +380,7 @@ class Polynomial:
     def __sub__(self, other):
         """
         Subtract two Polynomials
+        P1 - P2
         """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
@@ -364,12 +390,12 @@ class Polynomial:
         try:
             other = Polynomial(Term(CONSTANT, coefficient=-other))
         finally:
-            terms = self.terms + [ZERO_TERM - each for each in other.terms]
-            return Polynomial(*terms)
+            return self + (-other)
 
     def __rsub__(self, other):
         """
         Constant minus Polynomial
+        P2 - P1
         """
         if not isinstance(other, int) and not isinstance(other, float):
             raise Exception('Valid constant required!')
@@ -379,6 +405,7 @@ class Polynomial:
     def __mul__(self, other):
         """
         Multiply two Polynomials
+        P1 * P2
         """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
@@ -398,6 +425,7 @@ class Polynomial:
     def __truediv__(self, other):
         """
         Divide two Polynomials
+        P1 / P2
         """
         pass  # TODO __truediv__
 
