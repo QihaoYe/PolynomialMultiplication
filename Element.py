@@ -4,6 +4,7 @@ __author__ = 'Yee_172'
 __data__ = '2017/8/28'
 
 # from copy import deepcopy
+from functools import reduce
 
 
 def ftoi(num):
@@ -34,6 +35,7 @@ class Indeterminate:
     """
     A member of the Term
     """
+
     def __init__(self, unknown, subscript=None, degree=1.0):
         if not isinstance(unknown, str):
             raise Exception('Name of Indeterminate must be string!')
@@ -81,9 +83,9 @@ class Indeterminate:
         if not isinstance(spaces, int):
             raise Exception('The number of spaces must be integer!')
 
-        print(' '*spaces + 'unknown  :\t    %s' % self.unknown)
-        print(' '*spaces + 'subscript:\t    %s' % self.subscript)
-        print(' '*spaces + 'degree   :\t    %s' % str(self.degree))
+        print(' ' * spaces + 'unknown  :\t    %s' % self.unknown)
+        print(' ' * spaces + 'subscript:\t    %s' % self.subscript)
+        print(' ' * spaces + 'degree   :\t    %s' % str(self.degree))
 
     def __eq__(self, other):
         """
@@ -148,6 +150,7 @@ class Term:
     """
     A member of the Polynomial
     """
+
     def __init__(self, *indeterminates, coefficient=1.0):
         if isinstance(coefficient, bool) or isinstance(coefficient, str):
             raise Exception('Coefficient must be valid!')
@@ -160,14 +163,14 @@ class Term:
         indeterminates = sorted(indeterminates, key=lambda x: x.unknown)
         index = 0
         while 1:
-            if index >= len(indeterminates)-1:
+            if index >= len(indeterminates) - 1:
                 break
             try:
-                middle = indeterminates[index] * indeterminates[index+1]
+                middle = indeterminates[index] * indeterminates[index + 1]
                 if middle == CONSTANT:
-                    indeterminates = indeterminates[:index] + indeterminates[index+2:]
+                    indeterminates = indeterminates[:index] + indeterminates[index + 2:]
                 else:
-                    indeterminates = indeterminates[:index] + [middle] + indeterminates[index+2:]
+                    indeterminates = indeterminates[:index] + [middle] + indeterminates[index + 2:]
             except:
                 index += 1
 
@@ -196,17 +199,17 @@ class Term:
             string = '' if self.coefficient == 1 else '-' if self.coefficient == -1 else str(self.coefficient)
             string += '*'.join(str(each) for each in self.indeterminates)
             return string
-            
+
     def showdetail(self, spaces=0):
         """
         Print detailed info
         """
-        print(' '*spaces + 'number of Indeterminates:\t    %d' % len(self.indeterminates))
-        print(' '*spaces + 'coefficient             :\t    %s' % str(self.coefficient))
-        print(' '*spaces + 'degree                  :\t    %s' % str(self.degree))
+        print(' ' * spaces + 'number of Indeterminates:\t    %d' % len(self.indeterminates))
+        print(' ' * spaces + 'coefficient             :\t    %s' % str(self.coefficient))
+        print(' ' * spaces + 'degree                  :\t    %s' % str(self.degree))
         for n, each in enumerate(self.indeterminates):
-            print(' '*spaces + 'Indeterminate #%02d:' % (n+1))
-            each.showdetail(5+spaces)
+            print(' ' * spaces + 'Indeterminate #%02d:' % (n + 1))
+            each.showdetail(5 + spaces)
 
     def __eq__(self, other):
         """
@@ -292,6 +295,7 @@ class Polynomial:
     """
     A set of terms
     """
+
     def __init__(self, *terms):
         for each in terms:
             if not isinstance(each, Term):
@@ -434,7 +438,10 @@ class Polynomial:
         Power a Polynomial
         P1 ** power
         """
-        pass  # TODO __pow__
+        if not isinstance(power, int) or power < 0:
+            raise Exception('Power must be nonnegative integer!')
+
+        return reduce(lambda x, y: x * y, [self] * power, 1)
 
 
 # ---[test zone]---
@@ -448,6 +455,4 @@ T3 = Term(c, c, coefficient=4)
 T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P1 = Polynomial(T2, T1, T3, T4)
-P2 = Polynomial(T2)
-print(P1)
-print(3 - P1)
+P2 = Polynomial(T2, T3)
