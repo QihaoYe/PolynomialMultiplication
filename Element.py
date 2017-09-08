@@ -294,12 +294,7 @@ class Polynomial:
             terms = self.terms + other.terms
             return Polynomial(*terms)
 
-    def __radd__(self, other):
-        """ Constant plus Polynomial """
-        if not isinstance(other, int) and not isinstance(other, float):
-            raise Exception('Valid constant required!')
-
-        return self + other
+    __radd__ = __add__
 
     def __sub__(self, other):
         """ Subtract two Polynomials """
@@ -336,6 +331,8 @@ class Polynomial:
                 terms += [_each * each for _each in self.terms]
             return Polynomial(*terms)
 
+    __rmul__ = __mul__
+
     def __truediv__(self, other):
         """ Divide two Polynomials """
         pass  # TODO __truediv__
@@ -353,3 +350,5 @@ T4 = Term(coefficient=-1)
 T5 = Term(a, b, d)
 P1 = Polynomial(T2, T1, T3, T4)
 P2 = Polynomial(T2)
+print(P1)
+print(5 * P1)
