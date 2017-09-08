@@ -7,22 +7,30 @@ __data__ = '2017/8/28'
 
 
 def ftoi(num):
-    """ Float to int if it has no decimal """
+    """
+    Float to int if it has no decimal
+    """
     return int(num) if int(num) == num else num
 
 
 def dtos(num):
-    """ Digit to Simply digit """
+    """
+    Digit to Simply digit
+    """
     return ftoi(round(num, 10))
 
 
 def stos(string):
-    """ String to Simply digit """
+    """
+    String to Simply digit
+    """
     return dtos(float(string))
 
 
 class Indeterminate:
-    """ A member of the Term """
+    """
+    A member of the Term
+    """
     def __init__(self, unknown, subscript=None, degree=1.0):
         if not isinstance(unknown, str):
             raise Exception('Name of Indeterminate must be string!')
@@ -41,11 +49,15 @@ class Indeterminate:
             self.degree = 0
 
     def tolist(self):
-        """ Return a list of its info """
+        """
+        Return a list of its info
+        """
         return [self.unknown, self.subscript, self.degree]
 
     def __str__(self):
-        """ Return a string means the same """
+        """
+        Return a string means the same
+        """
         if not self.unknown:
             return '1'
         elif self.degree == 1:
@@ -60,7 +72,9 @@ class Indeterminate:
                 return '%s^%s' % (self.unknown, str(self.degree))
 
     def showdetail(self, spaces=0):
-        """ Print detailed info """
+        """
+        Print detailed info
+        """
         if not isinstance(spaces, int):
             raise Exception('The number of spaces must be integer!')
 
@@ -69,7 +83,9 @@ class Indeterminate:
         print(' '*spaces + 'degree   :\t    %s' % str(self.degree))
 
     def __eq__(self, other):
-        """ Judge if two Indeterminates are equal """
+        """
+        Judge if two Indeterminates are equal
+        """
         if not isinstance(other, Indeterminate):
             raise Exception('Must compare with an Indeterminate!')
 
@@ -80,11 +96,15 @@ class Indeterminate:
         return False
 
     # def __copy__(self):
-    #     """ Return a copy of itself """
+    #     """
+    #     Return a copy of itself
+    #     """
     #     return Indeterminate(self.unknown, self.subscript, self.degree)
 
     def ismultiplicative(self, other):
-        """ Judge if two Indeterminates can multiply """
+        """
+        Judge if two Indeterminates can multiply
+        """
         if not isinstance(other, Indeterminate):
             raise Exception('Must compare with an Indeterminate!')
 
@@ -96,7 +116,9 @@ class Indeterminate:
         return False
 
     def __mul__(self, other):
-        """ Multiply two multiplicative Indeterminates """
+        """
+        Multiply two multiplicative Indeterminates
+        """
         if not isinstance(other, Indeterminate):
             raise Exception('Indeterminate must be valid!')
         if not self.ismultiplicative(other):
@@ -108,7 +130,9 @@ class Indeterminate:
         return Indeterminate(self.unknown, self.subscript, degree) if degree else CONSTANT
 
     def __truediv__(self, other):
-        """ Divide an Indeterminate by another """
+        """
+        Divide an Indeterminate by another
+        """
         return self * Indeterminate(other.unknown, other.subscript, -other.degree)
 
 
@@ -116,7 +140,9 @@ CONSTANT = Indeterminate('', degree=0)
 
 
 class Term:
-    """ A member of the Polynomial """
+    """
+    A member of the Polynomial
+    """
     def __init__(self, *indeterminates, coefficient=1.0):
         if isinstance(coefficient, bool) or isinstance(coefficient, str):
             raise Exception('Coefficient must be valid!')
@@ -150,11 +176,15 @@ class Term:
             self.degree = 0
 
     def tolist(self):
-        """ Return a list of its info """
+        """
+        Return a list of its info
+        """
         return [[each.tolist() for each in self.indeterminates], self.coefficient, self.degree]
 
     def __str__(self):
-        """ Return a string means the same """
+        """
+        Return a string means the same
+        """
         if not self.degree:
             return '%s' % str(self.coefficient)
         else:
@@ -163,7 +193,9 @@ class Term:
             return string
             
     def showdetail(self, spaces=0):
-        """ Print detailed info """
+        """
+        Print detailed info
+        """
         print(' '*spaces + 'number of Indeterminates:\t    %d' % len(self.indeterminates))
         print(' '*spaces + 'coefficient             :\t    %s' % str(self.coefficient))
         print(' '*spaces + 'degree                  :\t    %s' % str(self.degree))
@@ -172,7 +204,9 @@ class Term:
             each.showdetail(5+spaces)
 
     def __eq__(self, other):
-        """ Judge if two Terms are equal """
+        """
+        Judge if two Terms are equal
+        """
         if not isinstance(other, Term):
             raise Exception('Must compare with a Term!')
 
@@ -183,7 +217,9 @@ class Term:
         return False
 
     def isincreasable(self, other):
-        """ Judge if two Terms is increasable """
+        """
+        Judge if two Terms is increasable
+        """
         if not isinstance(other, Term):
             raise Exception('Must compare with a Term!')
 
@@ -198,7 +234,9 @@ class Term:
         return False
 
     def __add__(self, other):
-        """ Add two Terms """
+        """
+        Add two Terms
+        """
         if not isinstance(other, Term):
             raise Exception('Must add with a Term!')
         if not self.isincreasable(other):
@@ -209,11 +247,15 @@ class Term:
         return Term(*self.indeterminates, coefficient=self.coefficient + other.coefficient)
 
     def __sub__(self, other):
-        """ Subtract two Terms """
+        """
+        Subtract two Terms
+        """
         return self + Term(*other.indeterminates, coefficient=-other.coefficient)
 
     def __mul__(self, other):
-        """ Multiply two Terms """
+        """
+        Multiply two Terms
+        """
         if not isinstance(other, Term):
             raise Exception('Term acquired')
 
@@ -221,7 +263,9 @@ class Term:
         return Term(*indeterminates, coefficient=self.coefficient * other.coefficient)
 
     def __truediv__(self, other):
-        """ Divide two Terms """
+        """
+        Divide two Terms
+        """
         return self * Term(*[CONSTANT / each for each in other.indeterminates], coefficient=1 / other.coefficient)
 
 
@@ -229,7 +273,9 @@ ZERO_TERM = Term(coefficient=0)
 
 
 class Polynomial:
-    """ A set of terms """
+    """
+    A set of terms
+    """
     def __init__(self, *terms):
         for each in terms:
             if not isinstance(each, Term):
@@ -256,16 +302,22 @@ class Polynomial:
         self.degree = terms[0].degree
 
     def tolist(self):
-        """ Return a list of its info """
+        """
+        Return a list of its info
+        """
         return [[each.tolist() for each in self.terms], self.degree]
 
     def __str__(self):
-        """ Return a string means the same """
+        """
+        Return a string means the same
+        """
         string = '+'.join(str(each) for each in self.terms).replace('+-', '-')
         return string[1:] if string[0] == '+' else string
 
     def showdetail(self, spaces=0):
-        """ Print detailed info """
+        """
+        Print detailed info
+        """
         print(' ' * spaces + 'number of Terms:\t    %d' % len(self.terms))
         print(' ' * spaces + 'degree         :\t    %s' % str(self.degree))
         for n, each in enumerate(self.terms):
@@ -273,7 +325,9 @@ class Polynomial:
             each.showdetail(5 + spaces)
 
     def __eq__(self, other):
-        """ Judge if two Polynomials are equal """
+        """
+        Judge if two Polynomials are equal
+        """
         if not isinstance(other, Polynomial):
             raise Exception('Must compare with a Polynomial!')
 
@@ -282,7 +336,9 @@ class Polynomial:
         return False
 
     def __add__(self, other):
-        """ Add polynomials together """
+        """
+        Add polynomials together
+        """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
@@ -297,7 +353,9 @@ class Polynomial:
     __radd__ = __add__
 
     def __sub__(self, other):
-        """ Subtract two Polynomials """
+        """
+        Subtract two Polynomials
+        """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
@@ -310,14 +368,18 @@ class Polynomial:
             return Polynomial(*terms)
 
     def __rsub__(self, other):
-        """ Constant minus Polynomial """
+        """
+        Constant minus Polynomial
+        """
         if not isinstance(other, int) and not isinstance(other, float):
             raise Exception('Valid constant required!')
 
         return Polynomial() - self + other
 
     def __mul__(self, other):
-        """ Multiply two Polynomials """
+        """
+        Multiply two Polynomials
+        """
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
@@ -334,7 +396,9 @@ class Polynomial:
     __rmul__ = __mul__
 
     def __truediv__(self, other):
-        """ Divide two Polynomials """
+        """
+        Divide two Polynomials
+        """
         pass  # TODO __truediv__
 
 
