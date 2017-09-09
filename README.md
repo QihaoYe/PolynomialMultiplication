@@ -1,5 +1,6 @@
 # PolynomialMultiplication
-A little tool for polynomial multiplication
+A little tool for polynomial multiplication\
+Warning: '\(' & '\)' & '\[' & '\]' & '\{' & '\}' are not supported yet!!!
 ## PolynomialMultiplication.py
 Main
 ## Element.py
