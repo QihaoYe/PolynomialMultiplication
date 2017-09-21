@@ -84,14 +84,14 @@ class Indeterminate:
             return '1'
         elif self.degree == 1:
             if self.subscript:
-                return '%s${_%s}$' % (self.unknown, self.subscript)
+                return '%s$_{%s}$' % (self.unknown, self.subscript)
             else:
                 return self.unknown
         else:
             if self.subscript:
-                return '%s${_%s}$${^%s}$' % (self.unknown, self.subscript, str(self.degree))
+                return '%s$_{%s}^{%s}$' % (self.unknown, self.subscript, str(self.degree))
             else:
-                return '%s${^%s}$' % (self.unknown, str(self.degree))
+                return '%s$^{%s}$' % (self.unknown, str(self.degree))
 
     def showdetail(self, spaces=0):
         """
@@ -215,6 +215,17 @@ class Term:
         else:
             string = '' if self.coefficient == 1 else '-' if self.coefficient == -1 else str(self.coefficient)
             string += '*'.join(str(each) for each in self.indeterminates)
+            return string
+
+    def latex(self):
+        """
+        Return a latex form
+        """
+        if not self.degree:
+            return '%s' % str(self.coefficient)
+        else:
+            string = '' if self.coefficient == 1 else '-' if self.coefficient == -1 else str(self.coefficient)
+            string += ''.join(each.latex() for each in self.indeterminates)
             return string
 
     def showdetail(self, spaces=0):
@@ -352,6 +363,13 @@ class Polynomial:
         string = '+'.join(str(each) for each in self.terms).replace('+-', '-')
         return string[1:] if string[0] == '+' else string
 
+    def latex(self):
+        """
+        Return a latex form
+        """
+        string = '+'.join(each.latex() for each in self.terms).replace('+-', '-')
+        return string[1:] if string[0] == '+' else string
+
     def showdetail(self, spaces=0):
         """
         Print detailed info
@@ -474,3 +492,4 @@ class Polynomial:
 # T5 = Term(a, b, d)
 # P1 = Polynomial(T2, T1, T3, T4)
 # P2 = Polynomial(T2, T3)
+# print(P1.latex())
