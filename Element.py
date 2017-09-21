@@ -76,6 +76,23 @@ class Indeterminate:
             else:
                 return '%s^%s' % (self.unknown, str(self.degree))
 
+    def latex(self):
+        """
+        Return a latex form
+        """
+        if not self.unknown:
+            return '1'
+        elif self.degree == 1:
+            if self.subscript:
+                return '%s${_%s}$' % (self.unknown, self.subscript)
+            else:
+                return self.unknown
+        else:
+            if self.subscript:
+                return '%s${_%s}$${^%s}$' % (self.unknown, self.subscript, str(self.degree))
+            else:
+                return '%s${^%s}$' % (self.unknown, str(self.degree))
+
     def showdetail(self, spaces=0):
         """
         Print detailed info
