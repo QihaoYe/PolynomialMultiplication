@@ -25,3 +25,8 @@ from Func import *
 # for i in range(5):
 #     for j in range(i, 5):
 #         print('x%d * x%d = %s' % (i, j, x[i] * x[j]))
+
+x = str2polynomial('x')
+y = str2polynomial('1-x')
+a = 3 * (x ** 3) + 12 * (x ** 2) * y + 3 * (x ** 2) + 5 * (x * y) + x + 7 * x * (y ** 2) + 3 * (y ** 3) + y ** 2
+print(a)
