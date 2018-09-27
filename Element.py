@@ -5,7 +5,7 @@ __date__ = '2017/8/28'
 
 # from copy import deepcopy
 from functools import reduce
-
+from decimal import Decimal
 
 def ftoi(num):
     """
@@ -425,10 +425,11 @@ class Polynomial:
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
-                    raise Exception('Each Polynomial must be valid!')
+                    if not isinstance(other, Decimal):
+                        raise Exception('Each Polynomial must be valid!')
 
         try:
-            other = Polynomial(Term(CONSTANT, coefficient=-other))
+            other = Polynomial(Term(CONSTANT, coefficient=other))
         finally:
             return -other + self
 
@@ -450,7 +451,8 @@ class Polynomial:
         if not isinstance(other, Polynomial):
             if not isinstance(other, int):
                 if not isinstance(other, float):
-                    raise Exception('Each Polynomial must be valid!')
+                    if not isinstance(other, Decimal):
+                        raise Exception('Each Polynomial must be valid!')
 
         try:
             other = Polynomial(Term(CONSTANT, coefficient=other))
@@ -467,7 +469,13 @@ class Polynomial:
         Divide two Polynomials
         P1 / P2
         """
-        pass  # TODO __truediv__
+        if not isinstance(other, int) and not isinstance(other, float) and not isinstance(other, Decimal):
+            raise Exception('Not supported yet!')
+        try:
+            return self * (1 / other)
+        except:
+            raise Exception('Valid constant required!')
+        # TODO __truediv__
 
     def __pow__(self, power, modulo=None):
         """
